@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+    <title>Homepage</title> 
+</head> 
+<body> 
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created Date</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for video in videos_list %}
+            <tr>
+              <td>{{ video.title }}</td>
+              <td>{{ video.description }}</td>
+              <td>{{ video.published_date }}</td>
+              <img src='{{ video.thumbnail_url }}' />
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated %}
+    <ul class="pagination">
+    {% if page_obj.has_previous %}
+        <li>
+            <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+        </li>
+    {% endif %}
+        <li class="">
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+        </li>
+    {% if page_obj.has_next %}
+        <li>
+            <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+        </li>
+    {% endif %}
+    </ul>
+    {% else %}
+        <h3>Vides are not available yet.</h3>
+    {% endif %}
+</body> 
+</html> 
