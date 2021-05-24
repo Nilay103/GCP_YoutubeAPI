@@ -73,7 +73,7 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
 class YouTubeVideoView(ListView):
     model = YouTubeVideo
     template_name = "videos_list.html"
-    paginate_by = 10
+    paginate_by = 9
 
     def get_context_data(self, **kwargs):
         context = super(YouTubeVideoView, self).get_context_data(**kwargs) 

@@ -6,48 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
     <title>Homepage</title> 
     <style>
-      .flex-container {
-        display: flex;
-        background-color: DodgerBlue;
+      .flex-wrapper {
+        margin: 50px 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-flow: row;
+        grid-gap: 35px;
       }
-      
-      .flex-container > div {
-        background-color: #f1f1f1;
-        margin: 10px;
-        padding: 20px;
-        font-size: 30px;
+      /* @media (min-width: 500px) {
+        .flex-container
+          grid-template-columns: repeat(2, 1fr)
       }
+      @media (min-width: 1024px) {
+        .flex-container
+          grid-template-columns: repeat(3, 1fr)
+      }
+      @media (min-width: 1500px) {
+        .flex-container
+          grid-template-columns: repeat(3, 1fr) */
 
-      .flex-container > ul {
-        display: flex;
-        flex-wrap: wrap;
-        padding-left: 0;
-      }
-
-      .flex-container ul li {
-        list-style: none;
-        flex: 0 0 33.333333%;
-      }
-
-      </style>
+    </style>
 </head> 
 <body>
+  <div class="flex-wrapper">
     {% for video in videos_list %}
-
-      <div class="flex-container">
-        <ul>
-            <li>
-              <div>
-                <h4>{{ video.title }}</h4>
-                {{ video.description }}
-                {{ video.published_date }}
-                <img src='{{ video.thumbnail_url }}' />
-              </div> 
-            </li>
-        </ul>
+      <div>
+        <h4>{{ video.title }}</h4>
+        {{ video.description }}
+        {{ video.published_date }}
+        <img src='{{ video.thumbnail_url }}' />
       </div>
     {% endfor %}
-
+  </div>
     {% if is_paginated %}
     <ul class="pagination">
     {% if page_obj.has_previous %}

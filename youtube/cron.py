@@ -26,7 +26,7 @@ def upload_youtube_metadata():
             'title': snippet['title'],
             'description': snippet['description'],
             'published_date': snippet['publishTime'],
-            'thumbnail_url': snippet['thumbnails']['high']
+            'thumbnail_url': snippet['thumbnails']['high']['url']
         }))
         published_before = snippet['publishTime']
 
