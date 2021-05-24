@@ -49,7 +49,6 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
             request = youtube.search().list(
                 q='coldplay', part='snippet',
                 maxResults=MAX_RESULTS,
-                # pageToken=response.get('nextPageToken'),
                 publishedBefore=published_before,
                 order='date')
             response = request.execute()
@@ -59,19 +58,20 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
                     'title': snippet['title'],
                     'description': snippet['description'],
                     'published_date': snippet['publishTime'],
-                    'thumbnail_url': snippet['thumbnails']['high']
+                    'thumbnail_url': snippet['thumbnails']['high']['url']
                 }))
                 count+=1
                 published_before = snippet['publishTime']
 
-        YouTubeVideo.objects.bulk_create(youtube_videos.reverse(), batch_size=500)
+        youtube_videos.reverse()
+        YouTubeVideo.objects.bulk_create(youtube_videos, batch_size=500)
         return Response(YouTubeVideo.objects.values(), status=status.HTTP_200_OK)
 
 
 class YouTubeVideoView(ListView):
     model = YouTubeVideo
     template_name = "videos_list.html"
-    paginate_by = 2
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(YouTubeVideoView, self).get_context_data(**kwargs) 
@@ -90,6 +90,6 @@ class YouTubeVideoView(ListView):
             videos_list = paginator.page(1)
         except EmptyPage:
             videos_list = paginator.page(paginator.num_pages)
-            
+
         context['videos_list'] = videos_list
         return context

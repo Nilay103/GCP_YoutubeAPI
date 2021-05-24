@@ -32,20 +32,21 @@
       </style>
 </head> 
 <body>
-    <div class="flex-container">
-      <ul>
-        {% for video in videos_list %}
-          <li>
-            <div>
-              {{ video.title }}
-              {{ video.description }}
-              {{ video.published_date }}
-              <img src='{{ video.thumbnail_url }}' />
-            </div> 
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% for video in videos_list %}
+
+      <div class="flex-container">
+        <ul>
+            <li>
+              <div>
+                {{ video.title }}
+                {{ video.description }}
+                {{ video.published_date }}
+                <img src='{{ video.thumbnail_url }}' />
+              </div> 
+            </li>
+        </ul>
+      </div>
+    {% endfor %}
 
     {% if is_paginated %}
     <ul class="pagination">

@@ -16,7 +16,7 @@ def my_cron_job(API_KEY, search_key):
         publishedAfter=latest_published_date,
         order='date')
     response = request.execute()
-    
+
     youtube_videos = []
     published_before = ''
     for video_obj in response['items']:
@@ -42,11 +42,12 @@ def my_cron_job(API_KEY, search_key):
                 'title': snippet['title'],
                 'description': snippet['description'],
                 'published_date': snippet['publishTime'],
-                'thumbnail_url': snippet['thumbnails']['high']
+                'thumbnail_url': snippet['thumbnails']['high']['url']
             }))
             published_before = snippet['publishTime']
 
-    YouTubeVideo.objects.bulk_create(youtube_videos.reverse(), batch_size=500)
+    youtube_videos.reverse()
+    YouTubeVideo.objects.bulk_create(youtube_videos, batch_size=500)
 
     f = open(f"/home/nilay/Desktop/myfile{str(datetime.datetime.now())}.txt", "w")
     f.write(str(youtube_videos))
