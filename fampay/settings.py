@@ -131,7 +131,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRONJOBS = [
-    ('* * * * *', 'youtube.cron.my_cron_job', [API_KEY])
+    ('* * * * *', 'youtube.cron.upload_youtube_metadata', '>>'+os.path.join(BASE_DIR,'log/debug7.log 2>&1'))
 ]
-
-# */10 * * * *

@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 
+from .filters import YouTubeVideoFilter
 from .models import YouTubeVideo
 from .pagination import CustomPagination
 from .serializers import YouTubeVideoSerializer
@@ -13,10 +14,11 @@ from googleapiclient.discovery import build
 
 
 class YouTubeVideoViewSet(viewsets.ModelViewSet):
-    queryset = YouTubeVideo.objects.all()
+    queryset = YouTubeVideo.objects.all().order_by('-id')
     serializer_class = YouTubeVideoSerializer
     pagination_class = CustomPagination
     http_method_names = ['get',]
+    filterset_class = YouTubeVideoFilter
 
     @action(methods=['GET'], detail=False, url_name='test')
     def test(self, request, pk=None):
@@ -39,12 +41,12 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
                 'title': snippet['title'],
                 'description': snippet['description'],
                 'published_date': snippet['publishTime'],
-                'thumbnail_url': snippet['thumbnails']['high']
+                'thumbnail_url': snippet['thumbnails']['high']['url']
             }))
             count+=1
             published_before = snippet['publishTime']
 
-        while response.get('nextPageToken') and response['pageInfo']['resultsPerPage'] == MAX_RESULTS:
+        while response.get('nextPageToken') and response['pageInfo']['resultsPerPage'] == MAX_RESULTS and count < 2000:
             print(count)
             request = youtube.search().list(
                 q='coldplay', part='snippet',
@@ -75,7 +77,7 @@ class YouTubeVideoView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(YouTubeVideoView, self).get_context_data(**kwargs) 
-        queryset = YouTubeVideo.objects.all()
+        queryset = YouTubeVideo.objects.all().order_by('-id')
 
         page = self.request.GET.get('page')
         title = self.request.GET.get('title')

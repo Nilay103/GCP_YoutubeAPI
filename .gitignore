@@ -2,3 +2,4 @@ __pycache__/
 .idea
 config.ini
 fampay/config.ini
+log/debug7.log

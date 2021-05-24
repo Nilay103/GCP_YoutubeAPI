@@ -1,17 +1,18 @@
 import datetime
 from googleapiclient.discovery import build
 
+from fampay.settings import SEARCH_KEY, API_KEY
 from youtube.models import YouTubeVideo
 
 
-def my_cron_job(API_KEY, search_key):
+def upload_youtube_metadata():
     youtube = build('youtube', 'v3', developerKey=API_KEY)
 
     latest_published_date = YouTubeVideo.get_latest_published_date().strftime("%Y-%m-%dT%H:%M:%SZ")
     MAX_RESULTS = 50
 
     request = youtube.search().list(
-        q=search_key, part='snippet',
+        q=SEARCH_KEY, part='snippet',
         maxResults=MAX_RESULTS,
         publishedAfter=latest_published_date,
         order='date')
@@ -31,7 +32,7 @@ def my_cron_job(API_KEY, search_key):
 
     while response.get('nextPageToken') and response['pageInfo']['resultsPerPage'] == MAX_RESULTS:
         request = youtube.search().list(
-            q=search_key, part='snippet',
+            q=SEARCH_KEY, part='snippet',
             maxResults=MAX_RESULTS,
             publishedBefore=published_before,
             order='date')

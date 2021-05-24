@@ -8,5 +8,5 @@ router.register('videos', YouTubeVideoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('lol', YouTubeVideoView.as_view())
+    path('dashboard', YouTubeVideoView.as_view())
 ]
