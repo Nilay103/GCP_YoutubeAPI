@@ -33,7 +33,7 @@ def get_youtube_api_response(youtube, latest_published_date, published_before):
         }))
         published_before = snippet['publishTime']
 
-    return youtube_videos, published_before, get_response_is_valid()
+    return youtube_videos, published_before, get_response_is_valid(response)
 
 
 def upload_youtube_metadata():

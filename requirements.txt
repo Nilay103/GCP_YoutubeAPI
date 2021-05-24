@@ -1,5 +1,6 @@
 Django==3.1.5
 django-crontab==0.7.1
+django-filter==2.4.0
 djangorestframework==3.12.4
 google-api-python-client==2.5.0
 mysqlclient==2.0.3
