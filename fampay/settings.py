@@ -83,8 +83,14 @@ WSGI_APPLICATION = 'fampay.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config.get('database', 'NAME'),
+        'HOST': config.get('database', 'HOST'),
+        'USER': config.get('database', 'USER'),
+        'PASSWORD': config.get('database', 'PASSWORD'),
+        # 'OPTIONS': {
+        #     'init_command': "SET innodb_strict_mode=1, sql_mode='STRICT_TRANS_TABLES'",
+        # },
     }
 }
 

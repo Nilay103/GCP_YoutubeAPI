@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from googleapiclient.discovery import build
 
 from youtube.models import YouTubeVideo
@@ -7,7 +7,7 @@ from youtube.models import YouTubeVideo
 def my_cron_job(API_KEY, search_key):
     youtube = build('youtube', 'v3', developerKey=API_KEY)
 
-    latest_published_date = YouTubeVideo.get_latest_published_date()
+    latest_published_date = YouTubeVideo.get_latest_published_date().strftime("%Y-%m-%dT%H:%M:%SZ")
     request = youtube.search().list(
         q=search_key, part='snippet',
         maxResults=500,
@@ -24,8 +24,10 @@ def my_cron_job(API_KEY, search_key):
             'thumbnail_url': snippet['thumbnails']['high']
         }))
 
-    while response:
+    while True:
         request = youtube.search().list_next(request, response)
+        if not request:
+            break
         response = request.execute()
         for video_obj in response['items']:
             snippet = video_obj['snippet']
@@ -38,5 +40,5 @@ def my_cron_job(API_KEY, search_key):
 
     YouTubeVideo.objects.bulk_create(youtube_videos)
 
-    f = open(f"/home/nilay/Desktop/myfile{str(datetime.now())}.txt", "w")
+    f = open(f"/home/nilay/Desktop/myfile{str(datetime.datetime.now())}.txt", "w")
     f.write(str(youtube_videos))
