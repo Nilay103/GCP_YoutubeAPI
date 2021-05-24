@@ -82,9 +82,13 @@ class YouTubeVideoView(ListView):
     def get_context_data(self, **kwargs):
         context = super(YouTubeVideoView, self).get_context_data(**kwargs) 
         queryset = YouTubeVideo.objects.all()
-        paginator = Paginator(queryset, self.paginate_by)
 
         page = self.request.GET.get('page')
+        title = self.request.GET.get('title')
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+
+        paginator = Paginator(queryset, self.paginate_by)
 
         try:
             videos_list = paginator.page(page)

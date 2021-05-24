@@ -8,11 +8,6 @@ class YouTubeVideo(models.Model):
     published_date = models.DateTimeField()
     thumbnail_url = models.URLField(max_length=1000)
 
-    class Meta:
-        indexes = [
-            models.Index(fields=['title']),
-        ]
-
     @staticmethod
     def get_latest_published_date():
         latest_obj = YouTubeVideo.objects.last()

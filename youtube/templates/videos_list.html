@@ -5,9 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
     <title>Homepage</title> 
+    <style>
+      .flex-container {
+        display: flex;
+        background-color: DodgerBlue;
+      }
+      
+      .flex-container > div {
+        background-color: #f1f1f1;
+        margin: 10px;
+        padding: 20px;
+        font-size: 30px;
+      }
+
+      .flex-container > ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+      }
+
+      .flex-container ul li {
+        list-style: none;
+        flex: 0 0 33.333333%;
+      }
+
+      </style>
 </head> 
 <body> 
-    <table class="table table-bordered">
+    <!-- <table class="table table-bordered">
         <thead>
           <tr>
             <th>Title</th>
@@ -26,7 +51,21 @@
             </tr>
           {% endfor %}
         </tbody>
-    </table>
+    </table> -->
+    <div class="flex-container">
+      <ul>
+        {% for video in videos_list %}
+          <li>
+            <div>
+              {{ video.title }}
+              {{ video.description }}
+              {{ video.published_date }}
+              <img src='{{ video.thumbnail_url }}' />
+            </div> 
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
 
     {% if is_paginated %}
     <ul class="pagination">
