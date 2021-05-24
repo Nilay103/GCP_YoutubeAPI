@@ -49,6 +49,4 @@ def upload_youtube_metadata():
 
     youtube_videos.reverse()
     YouTubeVideo.objects.bulk_create(youtube_videos, batch_size=500)
-
-    f = open(f"/home/nilay/Desktop/myfile{str(datetime.datetime.now())}.txt", "w")
-    f.write(str(youtube_videos))
+    return
