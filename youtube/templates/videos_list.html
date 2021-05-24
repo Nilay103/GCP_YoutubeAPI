@@ -13,18 +13,6 @@
         grid-auto-flow: row;
         grid-gap: 35px;
       }
-      /* @media (min-width: 500px) {
-        .flex-container
-          grid-template-columns: repeat(2, 1fr)
-      }
-      @media (min-width: 1024px) {
-        .flex-container
-          grid-template-columns: repeat(3, 1fr)
-      }
-      @media (min-width: 1500px) {
-        .flex-container
-          grid-template-columns: repeat(3, 1fr) */
-
     </style>
 </head> 
 <body>
@@ -34,7 +22,7 @@
         <h4>{{ video.title }}</h4>
         {{ video.description }}
         {{ video.published_date }}
-        <img src='{{ video.thumbnail_url }}' />
+        <img src='{{ video.thumbnail_url }}' style="height: 360px; width:480px" />
       </div>
     {% endfor %}
   </div>

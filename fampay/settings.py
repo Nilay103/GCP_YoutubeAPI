@@ -72,8 +72,8 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20
 }
+PAGE_SIZE = 9
 
 WSGI_APPLICATION = 'fampay.wsgi.application'
 
@@ -131,5 +131,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRONJOBS = [
-    ('* * * * *', 'youtube.cron.upload_youtube_metadata', '>>'+os.path.join(BASE_DIR,'log/debug7.log 2>&1'))
+    ('*/10 * * * *', 'youtube.cron.upload_youtube_metadata', '>>'+os.path.join(BASE_DIR,'log/debug7.log 2>&1'))
 ]
