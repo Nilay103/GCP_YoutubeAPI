@@ -1,17 +1,15 @@
-from django.shortcuts import render
-from rest_framework import viewsets, status, mixins
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
-from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
 
 from .models import YouTubeVideo
 from .pagination import CustomPagination
 from .serializers import YouTubeVideoSerializer
-
-import datetime
-from googleapiclient.discovery import build
 from fampay.settings import API_KEY
+
+from googleapiclient.discovery import build
 
 
 class YouTubeVideoViewSet(viewsets.ModelViewSet):
@@ -68,10 +66,6 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
 
         YouTubeVideo.objects.bulk_create(youtube_videos.reverse(), batch_size=500)
         return Response(YouTubeVideo.objects.values(), status=status.HTTP_200_OK)
-
-
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic.list import ListView
 
 
 class YouTubeVideoView(ListView):

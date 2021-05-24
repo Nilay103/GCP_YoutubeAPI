@@ -8,13 +8,17 @@ def my_cron_job(API_KEY, search_key):
     youtube = build('youtube', 'v3', developerKey=API_KEY)
 
     latest_published_date = YouTubeVideo.get_latest_published_date().strftime("%Y-%m-%dT%H:%M:%SZ")
+    MAX_RESULTS = 50
+
     request = youtube.search().list(
         q=search_key, part='snippet',
-        maxResults=500,
+        maxResults=MAX_RESULTS,
         publishedAfter=latest_published_date,
         order='date')
     response = request.execute()
+    
     youtube_videos = []
+    published_before = ''
     for video_obj in response['items']:
         snippet = video_obj['snippet']
         youtube_videos.append(YouTubeVideo(**{
@@ -23,11 +27,14 @@ def my_cron_job(API_KEY, search_key):
             'published_date': snippet['publishTime'],
             'thumbnail_url': snippet['thumbnails']['high']
         }))
+        published_before = snippet['publishTime']
 
-    while True:
-        request = youtube.search().list_next(request, response)
-        if not request:
-            break
+    while response.get('nextPageToken') and response['pageInfo']['resultsPerPage'] == MAX_RESULTS:
+        request = youtube.search().list(
+            q=search_key, part='snippet',
+            maxResults=MAX_RESULTS,
+            publishedBefore=published_before,
+            order='date')
         response = request.execute()
         for video_obj in response['items']:
             snippet = video_obj['snippet']
@@ -37,8 +44,9 @@ def my_cron_job(API_KEY, search_key):
                 'published_date': snippet['publishTime'],
                 'thumbnail_url': snippet['thumbnails']['high']
             }))
+            published_before = snippet['publishTime']
 
-    YouTubeVideo.objects.bulk_create(youtube_videos)
+    YouTubeVideo.objects.bulk_create(youtube_videos.reverse(), batch_size=500)
 
     f = open(f"/home/nilay/Desktop/myfile{str(datetime.datetime.now())}.txt", "w")
     f.write(str(youtube_videos))
