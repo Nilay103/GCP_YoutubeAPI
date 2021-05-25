@@ -15,6 +15,7 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
     http_method_names = ['get',]
     filterset_class = YouTubeVideoFilter
 
+
 class YouTubeVideoView(ListView):
     model = YouTubeVideo
     template_name = "videos_list.html"
