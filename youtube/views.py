@@ -23,7 +23,7 @@ class YouTubeVideoView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(YouTubeVideoView, self).get_context_data(**kwargs) 
-        queryset = YouTubeVideo.objects.all().order_by('-id')
+        queryset = YouTubeVideo.objects.all().order_by('-published_date')
 
         page = self.request.GET.get('page')
         title = self.request.GET.get('title')

@@ -10,5 +10,5 @@ class YouTubeVideo(models.Model):
 
     @staticmethod
     def get_latest_published_date():
-        latest_obj = YouTubeVideo.objects.last()
+        latest_obj = YouTubeVideo.objects.order_by('-published_date').first()
         return latest_obj.published_date if latest_obj else datetime.datetime.fromtimestamp(0)
