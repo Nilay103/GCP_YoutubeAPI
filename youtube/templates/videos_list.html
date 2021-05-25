@@ -20,9 +20,12 @@
     {% for video in videos_list %}
       <div>
         <h4>{{ video.title }}</h4>
-        {{ video.description }}
-        {{ video.published_date }}
         <img src='{{ video.thumbnail_url }}' style="height: 360px; width:480px" />
+        <p>
+          {{ video.description }}
+          <br>
+          {{ video.published_date }}
+        </p>
       </div>
     {% endfor %}
   </div>

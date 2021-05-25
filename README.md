@@ -25,4 +25,4 @@ USER = user name
 PASSWORD = password
 ```
 
-Reference Link: Please visit http://34.234.94.137/
+Reference Link: Please visit http://34.234.94.137/youtube/dashboard (for desigining page) and http://34.234.94.137/youtube/videos/ (for API page)
