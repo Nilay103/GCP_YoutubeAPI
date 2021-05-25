@@ -1,6 +1,4 @@
-from rest_framework import viewsets, status
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework import viewsets
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 
@@ -8,9 +6,6 @@ from .filters import YouTubeVideoFilter
 from .models import YouTubeVideo
 from .pagination import CustomPagination
 from .serializers import YouTubeVideoSerializer
-from fampay.settings import API_KEY
-
-from googleapiclient.discovery import build
 
 
 class YouTubeVideoViewSet(viewsets.ModelViewSet):
@@ -19,7 +14,6 @@ class YouTubeVideoViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPagination
     http_method_names = ['get',]
     filterset_class = YouTubeVideoFilter
-
 
 class YouTubeVideoView(ListView):
     model = YouTubeVideo

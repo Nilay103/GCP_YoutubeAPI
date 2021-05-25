@@ -26,3 +26,14 @@ PASSWORD = password
 ```
 
 Reference Link: Please visit http://34.234.94.137/youtube/dashboard (for desigining page) and http://34.234.94.137/youtube/videos/ (for API page)
+
+Performance results for 50000 db entries:
+1. Silk (for single request)
+
+![Screenshot from 2021-05-25 12-02-16](https://user-images.githubusercontent.com/43541680/119450228-3985c200-bd51-11eb-80e2-452907f02ab6.png)
+
+2. Loadtest (for bulk requests):
+
+![Screenshot from 2021-05-25 12-01-57](https://user-images.githubusercontent.com/43541680/119450232-3b4f8580-bd51-11eb-93cf-11e683626083.png)
+
+![Screenshot from 2021-05-25 12-01-33](https://user-images.githubusercontent.com/43541680/119450242-3c80b280-bd51-11eb-82f8-bc2b53deec39.png)
