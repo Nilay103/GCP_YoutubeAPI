@@ -11,6 +11,8 @@ from .serializers import YouTubeVideoSerializer
 class YouTubeVideoViewSet(viewsets.ModelViewSet):
     queryset = YouTubeVideo.objects.all().order_by('-id')
     serializer_class = YouTubeVideoSerializer
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['title', 'description']
     pagination_class = CustomPagination
     http_method_names = ['get',]
     filterset_class = YouTubeVideoFilter

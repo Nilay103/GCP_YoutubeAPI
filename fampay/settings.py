@@ -92,7 +92,10 @@ DATABASES = {
         'HOST': config.get('database', 'HOST'),
         'USER': config.get('database', 'USER'),
         'PASSWORD': config.get('database', 'PASSWORD'),
-    }
+    },
+    'OPTIONS': {
+        'init_command': "SET innodb_strict_mode=1, sql_mode='STRICT_TRANS_TABLES'",
+    },
 }
 
 
