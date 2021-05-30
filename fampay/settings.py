@@ -94,7 +94,7 @@ DATABASES = {
         'PASSWORD': config.get('database', 'PASSWORD'),
     },
     'OPTIONS': {
-        'init_command': "SET innodb_strict_mode=1, sql_mode='STRICT_TRANS_TABLES'",
+        'init_command': "sql_mode='STRICT_TRANS_TABLES'",
     },
 }
 
