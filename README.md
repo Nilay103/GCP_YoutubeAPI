@@ -1,6 +1,8 @@
-# FAMPAY
+# Google Cloud Platform YouTube API
 
 ## Project Goal
+
+Upload newly created videos to your db periodically using GCP youtube api V3 and django cron job
 
 To make an API to fetch latest videos sorted in reverse chronological order of their publishing date-time from YouTube for a given tag/search query in a paginated response.
 steps:
